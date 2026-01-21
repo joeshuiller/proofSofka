@@ -7,13 +7,14 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { APP_CONFIG } from './core/config/app-config.token.ts';
 import { ProductsRepository } from './core/infrastructure/repositories/products.repository';
+import { IProductsRepository } from './core/domain/repositories/products.repository';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(withEventReplay()),
     { provide: APP_CONFIG, useValue: environment },
-    { provide: 'ProductsRepository', useClass: ProductsRepository },
+    { provide: IProductsRepository, useClass: ProductsRepository },
     provideHttpClient(withFetch()),
   ]
 };
