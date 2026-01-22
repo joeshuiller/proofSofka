@@ -1,27 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductsCreate } from './products-create';
+import { ProductsEdit } from './products-edit';
 import { ProductsUsecase } from '../../../core/application/use-case/products.usecase';
-import { fakeProduct, fakeProducts, mockUsecase } from '../products-list/products-list.spec';
-import { v4 as uuidv4 } from 'uuid';
+import { fakeProduct, mockUsecase } from '../products-list/products-list.spec';
 import { jest } from '@jest/globals';
-import { signal } from '@angular/core';
-describe('ProductsCreate', () => {
-  let component: ProductsCreate;
-  let fixture: ComponentFixture<ProductsCreate>;
+describe('ProductsEdit', () => {
+  let component: ProductsEdit;
+  let fixture: ComponentFixture<ProductsEdit>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductsCreate],
+      imports: [ProductsEdit],
       providers: [
-          { provide: ProductsUsecase, useValue: mockUsecase }
+        { provide: ProductsUsecase, useValue: mockUsecase }
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProductsCreate);
+    fixture = TestBed.createComponent(ProductsEdit);
     component = fixture.componentInstance;
+    // Seteamos un valor por defecto para todos los tests
+    fixture.componentRef.setInput('id', 'iooopppi');
     await fixture.whenStable();
+
+    fixture.detectChanges();
     jest.clearAllMocks();
     component.productsForm.setValue({
       uuid: 'test-uuid',
@@ -31,17 +33,12 @@ describe('ProductsCreate', () => {
       date_release: new Date('2024-01-01'),
       date_revision: new Date('2024-06-01')
     });
-    fixture.detectChanges();
   });
-  it('debe crear el producto exitosamente', () => {
+  it('debe obtener productos exitosamente', () => {
       fixture.detectChanges();
       const usecase = TestBed.inject(ProductsUsecase);
-      expect(usecase.products()).toEqual(mockUsecase.products());
-  });
-  it('debe generar un ID único', () => {
-    const id = uuidv4(); // Ahora esto no romperá el test
-    expect(id).toBeDefined();
-    // ... tu lógica de UseCase
+      expect(usecase.products()).toEqual(fakeProduct);
+      //expect(mockUsecase.getDataById).toHaveBeenCalledWith('iooopppi');
   });
 
   it('debe debe comsumir products', () => {
@@ -61,17 +58,6 @@ describe('ProductsCreate', () => {
     expect(submit).toBeTruthy;
   });
 
-  it('debe debe comsumir reset', () => {
-    const usecase = TestBed.inject(ProductsUsecase);
-    const products = usecase.products()
-    const submit = component.reset()
-    const productsForm = component.productsForm.controls['name'].value
-    TestBed.flushEffects();
-    fixture.detectChanges();
-    expect(submit).toBeTruthy;
-    expect(productsForm).toBe("");
-  });
-
   it('debe debe comsumir onDateChange', () => {
     // 1. Preparamos el mock del evento
     // Si tu componente espera un objeto Date:
@@ -88,5 +74,4 @@ describe('ProductsCreate', () => {
     // Asumiendo que guarda la fecha en un array llamado selectedDates
     //expect(component.selectedDates[0]).toEqual(mockDate);
   });
-
 });

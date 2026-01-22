@@ -1,6 +1,6 @@
 <section class="containerFull">
   <div class="content">
-    <h1>Formulario de Creación de Productos</h1>
+    <h1>Formulario de Editar de Productos</h1>
     <form [formGroup]="productsForm" (ngSubmit)="onSubmit()">
         <div class="form-input">
             <label for="uuid">ID</label>
@@ -62,7 +62,7 @@
         </div>
         <div class="form-input">
             <label for="date_release">Fecha de lanzamiento</label>
-            <input type="date" [min]="minDate()" formControlName="date_release" placeholder="Fecha de lanzamiento" (change)="onDateChange($event, 0)"/>
+            <input type="date" formControlName="date_release" placeholder="Fecha de lanzamiento" (change)="onDateChange($event, 0)"/>
             @if (productsForm.get('date_release')?.invalid && productsForm.get('date_release')?.touched) {
               <div class="error-message">
                 @if (productsForm.get('date_release')?.errors?.['required']) {
@@ -73,7 +73,7 @@
         </div>
         <div class="form-input">
             <label for="date_revision">Fecha de revisión</label>
-            <input type="date" [min]="minDateEnd()" formControlName="date_revision" placeholder="Fecha de revisión" (change)="onDateChange($event, 1)"/>
+            <input type="date" formControlName="date_revision" placeholder="Fecha de revisión" (change)="onDateChange($event, 1)"/>
             @if (productsForm.get('date_revision')?.invalid && productsForm.get('date_revision')?.touched) {
               <div class="error-message">
                 @if (productsForm.get('date_revision')?.errors?.['required']) {
@@ -83,7 +83,7 @@
             }
         </div>
 
-        <button type="button" (click)="reset()" class="buttonReset">Reiniciar</button>
+        <button type="button" (click)="reset()" class="buttonReset">Regresar</button>
         <button type="submit" [disabled]="!isFormValid()" class="buttonSave">{{loadingValid() ? 'Guardando...' : 'Guardar'}}</button>
     </form>
   </div>

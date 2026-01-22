@@ -4,6 +4,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": true,
+    "sourceMap": true, // 🚨 CRUCIAL para el coverage
+    "inlineSourceMap": false,
+    "esModuleInterop": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,

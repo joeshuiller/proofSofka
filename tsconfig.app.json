@@ -4,13 +4,19 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowJs": true,
     "types": [
       "node"
     ]
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/setup-jest.ts"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

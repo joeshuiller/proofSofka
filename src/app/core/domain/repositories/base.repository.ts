@@ -5,5 +5,5 @@ export interface IBaseRepository<T> {
   getById(id: string | number): Observable<T>;
   create(item: T): Observable<T>;
   update(id: string | number, item: T): Observable<T>;
-  delete(id: string | number): Observable<boolean>;
+  delete(id: string | number): Observable<T>;
 }
