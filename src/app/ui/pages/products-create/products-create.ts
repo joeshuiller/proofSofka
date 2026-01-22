@@ -33,6 +33,7 @@ export class ProductsCreate implements OnInit {
     this.products.products();
     effect(() => {
       const loading = this.products.productsLoading();
+      console.log(loading)
       if (!loading) {
         const dataList = this.products.products();
         if (dataList) {
@@ -61,7 +62,6 @@ export class ProductsCreate implements OnInit {
     if (this.productsForm.valid) {
       this.loadingValid.set(true);
       this.products.saveData(this.formValue());
-      console.log('Enviando al dominio:', this.formValue());
     }
   }
   reset(){

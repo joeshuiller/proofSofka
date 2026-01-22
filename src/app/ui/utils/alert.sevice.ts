@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class AlertSevice {
-  public isFormValid = signal(false);
   successAlert(title: string, text: string): void {
     Swal.fire({
       title: title,
@@ -21,17 +20,15 @@ export class AlertSevice {
       confirmButtonText: 'Aceptar'
     });
   }
-  deleteAlert(title: string, text: string): Promise<boolean> {
-    return Swal.fire({
+  async deleteAlert(title: string, text: string): Promise<boolean> {
+    const result = await Swal.fire({
       title: title,
       text: text,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then((result):boolean => {
-      this.isFormValid.set(result.isConfirmed);
-      return this.isFormValid();
     });
+    return result.isConfirmed;
   }
 }

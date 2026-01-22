@@ -52,7 +52,6 @@ export class ProductsUsecase {
     this.#loading.set(true);
     try {
       const data = await firstValueFrom(this._repository.saveData(product));
-      console.log('data:', data);
       this.#products.set(data.data as ProductModel);
       this.#loading.set(false);
     } catch(error: any){
@@ -79,7 +78,7 @@ export class ProductsUsecase {
     this.#loading.set(true);
     try {
       const data = await firstValueFrom(this._repository.editData(id, product));
-      this.#productsDelete.set(data);
+      this.#productsEdit.set(data);
       this.#loading.set(false);
     } catch(error){
       console.error('Error fetching product by ID:', error);

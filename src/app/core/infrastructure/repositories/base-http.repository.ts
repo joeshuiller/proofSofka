@@ -15,6 +15,7 @@ export abstract class BaseHttpRepository<T> implements IBaseRepository<T> {
   protected abstract resourcePath: string;
 
   protected get apiUrl(): string {
+    console.log('this.config.api.baseUrl:', this.config);
     return `${this.config.api.baseUrl}/${this.resourcePath}`;
   }
 
@@ -34,7 +35,7 @@ export abstract class BaseHttpRepository<T> implements IBaseRepository<T> {
     return this.http.put<T>(`${this.apiUrl}/${id}`, item);
   }
 
-  delete(id: string | number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+  delete(id: string | number): Observable<T> {
+    return this.http.delete<T>(`${this.apiUrl}/${id}`);
   }
 }

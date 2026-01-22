@@ -13,23 +13,25 @@ import { ResponseModel, Response } from '../../domain/models/response.model';
 export class ProductsRepository extends BaseHttpRepository<ProductModel> implements IProductsRepository {
 
   protected resourcePath = 'products';
-  private ProductsMapper = new ProductsMapper();
+  public ProductsMapper = new ProductsMapper();
 
   getData(): Observable<ResponseModel> {
-    return this.http.get<ResponseModel>(`${this.apiUrl}`);
+    return this.getAll() as unknown as Observable<ResponseModel>;
   }
   getDataById(id: string): Observable<Response> {
-    return this.http.get<Response>(`${this.apiUrl}/${id}`);
+    return this.getById(id) as unknown as Observable<Response>;
   }
   saveData(product: ProductsDto): Observable<Response> {
     const data = this.ProductsMapper.mapFromUi(product);
-    return this.http.post<Response>(this.apiUrl, data);
+    const dataOrd = this.ProductsMapper.mapToUi(data);
+    return this.create(data) as unknown as Observable<Response>;
   }
   deleteData(id: string): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+    return this.delete(id) as unknown as Observable<boolean>;
   }
   editData(id: string, product: ProductsDto): Observable<boolean> {
     const data = this.ProductsMapper.mapFromUi(product);
-    return this.http.put<boolean>(`${this.apiUrl}/${id}`, data);
+    const dataOrd = this.ProductsMapper.mapToUi(data);
+    return this.update(id, data) as unknown as Observable<boolean>;
   }
 }

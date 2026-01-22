@@ -30,9 +30,7 @@ export class ProductsList implements OnInit {
       if (!loading) {
         const dataList = this.products.productsList();
         if (dataList) {
-          console.log('dataList:', dataList.length);
           this.dataSource.data = dataList;
-
         }
         const deleteValid = this.products.productsDelete();
         if (deleteValid) {
